@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(set NEXT_PUBLIC_PREVIEW_MODE=true)",
+      "Bash(npx next *)",
+      "PowerShell(Set-Location \"E:\\\\AntigravityProjects\\\\dtmaniasorteos\"; $env:NEXT_PUBLIC_PREVIEW_MODE = \"true\"; Start-Process -FilePath \"npx\" -ArgumentList \"next\",\"dev\",\"--port\",\"3001\" -WorkingDirectory \"E:\\\\AntigravityProjects\\\\dtmaniasorteos\" -PassThru | Select-Object Id)",
+      "Bash(NEXT_PUBLIC_PREVIEW_MODE=true npx next dev --port 3001)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3001/)",
+      "Bash(pkill -f \"next dev --port 3001\")",
+      "Bash(curl -s http://localhost:3001/api/raffles)",
+      "Bash(curl *)"
+    ]
+  }
+}

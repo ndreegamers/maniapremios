@@ -3,9 +3,7 @@ export const dynamic = "force-dynamic";
 import { RaffleWithStats } from "@/lib/types";
 import { Topbar } from "@/components/nav/topbar";
 import { Footer } from "@/components/nav/footer";
-import { EditorialHero } from "@/components/home/editorial-hero";
 import { RaffleShowcase } from "@/components/home/raffle-showcase";
-import { OrnamentalDivider } from "@/components/nav/ornamental-divider";
 
 const MOCK_RAFFLES: RaffleWithStats[] = [
   {
@@ -23,6 +21,7 @@ const MOCK_RAFFLES: RaffleWithStats[] = [
     created_at: new Date().toISOString(),
     tickets_sold: 337,
     sold_percentage: 67.4,
+    is_free: false,
   },
   {
     id: "preview-raffle-dtm-002",
@@ -38,6 +37,23 @@ const MOCK_RAFFLES: RaffleWithStats[] = [
     created_at: new Date().toISOString(),
     tickets_sold: 120,
     sold_percentage: 40.0,
+    is_free: false,
+  },
+  {
+    id: "preview-raffle-dtm-003",
+    title: "Sorteo Gratuito — Nintendo Switch 2",
+    description: "Participa gratis. Máximo 1 ticket por persona.",
+    image_url:
+      "https://assets.nintendo.com/image/upload/f_auto/q_auto/ncom/software/switch/70010000068718/7481d61b6b4d47a0e5b7e929a1f06c63b9d98e6bf82a0e0f80eb75e3ef5f7b71.jpg",
+    ticket_price: 0,
+    total_tickets: 200,
+    draw_date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+    status: "active",
+    code_prefix: "DTM",
+    created_at: new Date().toISOString(),
+    tickets_sold: 45,
+    sold_percentage: 22.5,
+    is_free: true,
   },
 ];
 
@@ -72,7 +88,12 @@ async function getActiveRaffles(): Promise<RaffleWithStats[]> {
           : 0;
 
       const { purchases: _p, ...raffle } = r;
-      return { ...raffle, tickets_sold: ticketsSold, sold_percentage: soldPercentage };
+      return {
+        ...raffle,
+        is_free: raffle.is_free ?? false,
+        tickets_sold: ticketsSold,
+        sold_percentage: soldPercentage,
+      };
     });
   } catch {
     return [];
@@ -81,27 +102,40 @@ async function getActiveRaffles(): Promise<RaffleWithStats[]> {
 
 export default async function HomePage() {
   const raffles = await getActiveRaffles();
-  const [featuredRaffle, ...secondaryRaffles] = raffles;
 
   return (
     <div className="flex flex-col min-h-screen">
       <Topbar />
 
       <main className="flex-1">
-        {/* Editorial hero */}
-        <EditorialHero featuredRaffle={featuredRaffle ?? null} />
+        <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-14">
+          <div className="flex items-center gap-4 mb-10">
+            <span className="section-label">Sorteos activos</span>
+            <div className="flex-1 h-px bg-[#1C1F27]" />
+            {raffles.length > 0 && (
+              <span
+                className="text-xs text-[#8A90A0] tabular-nums"
+                style={{ fontFamily: "var(--font-mono-code)" }}
+              >
+                {raffles.length} disponibles
+              </span>
+            )}
+          </div>
 
-        {/* Secondary raffles grid */}
-        {secondaryRaffles.length > 0 && (
-          <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-            <OrnamentalDivider className="mb-10" label="Más sorteos" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {secondaryRaffles.map((raffle, i) => (
+          {raffles.length === 0 ? (
+            <div className="rounded-lg border border-[#1C1F27] bg-[#0F1116] p-16 flex flex-col items-center gap-4 text-center">
+              <p className="text-[#8A90A0] text-sm">
+                Próximamente nuevos sorteos. ¡Vuelve pronto!
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+              {raffles.map((raffle, i) => (
                 <RaffleShowcase key={raffle.id} raffle={raffle} index={i} />
               ))}
             </div>
-          </section>
-        )}
+          )}
+        </section>
       </main>
 
       <Footer />

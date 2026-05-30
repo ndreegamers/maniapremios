@@ -1,6 +1,7 @@
 export type RaffleStatus = "active" | "completed" | "cancelled";
 export type PaymentStatus = "pending" | "approved" | "rejected";
-export type PaymentMethod = "yape" | "plin";
+export type PaymentMethod = "yape" | "plin" | "free";
+export type PurchaseSource = "paid" | "free" | "referral_reward";
 
 export interface Raffle {
   id: string;
@@ -13,6 +14,7 @@ export interface Raffle {
   status: RaffleStatus;
   code_prefix: string;
   created_at: string;
+  is_free: boolean;
 }
 
 export interface RaffleWithStats extends Raffle {
@@ -38,8 +40,9 @@ export interface Purchase {
   total_tickets: number;
   total_amount: number;
   payment_method: PaymentMethod;
-  receipt_url: string;
+  receipt_url: string | null;
   payment_status: PaymentStatus;
+  source: PurchaseSource;
   created_at: string;
   reviewed_at: string | null;
 }
@@ -91,6 +94,27 @@ export interface WinnerPublic {
   drawn_at: string;
 }
 
+export interface ReferralCode {
+  id: string;
+  participant_id: string;
+  code: string;
+  created_at: string;
+}
+
+export interface ReferralCodeWithDetails extends ReferralCode {
+  participant: Participant;
+  uses_count: number;
+}
+
+export interface ReferralUse {
+  id: string;
+  referral_code_id: string;
+  referred_participant_id: string;
+  raffle_id: string;
+  reward_purchase_id: string | null;
+  created_at: string;
+}
+
 /* ── DTOs ── */
 
 export interface CreatePurchaseDTO {
@@ -101,6 +125,15 @@ export interface CreatePurchaseDTO {
   phone?: string;
   tickets_paid: number;
   payment_method: PaymentMethod;
+}
+
+export interface FreeEntryDTO {
+  raffle_id: string;
+  dni: string;
+  first_name: string;
+  last_name: string;
+  phone?: string;
+  referral_code?: string;
 }
 
 export interface DniLookupResult {

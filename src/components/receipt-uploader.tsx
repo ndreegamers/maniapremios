@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -78,7 +78,7 @@ export function ReceiptUploader({ onFile, onClear }: ReceiptUploaderProps) {
             </div>
             <button
               onClick={handleClear}
-              className="absolute top-2 right-2 bg-[#0B0B0D]/80 text-[#A0A0A8] hover:text-[#F5F5F0] rounded-full p-1 transition-colors"
+              className="absolute top-2 right-2 bg-[#08090C]/80 text-[#8A90A0] hover:text-[#EDEFF4] rounded-full p-1 transition-colors"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -95,23 +95,23 @@ export function ReceiptUploader({ onFile, onClear }: ReceiptUploaderProps) {
             className={cn(
               "rounded-md border-2 border-dashed p-6 flex flex-col items-center gap-4 transition-all duration-200",
               isDragging
-                ? "border-[#C9A961] bg-[#C9A961]/5"
-                : "border-[#3D3D48] hover:border-[#C9A961]/50"
+                ? "border-[#2E6BFF] bg-[#2E6BFF]/5"
+                : "border-[#262A34] hover:border-[#2E6BFF]/50"
             )}
           >
             <div className="flex flex-col items-center gap-2 text-center">
               {compressing ? (
                 <>
-                  <ImageIcon className="w-8 h-8 text-[#C9A961] animate-pulse" />
-                  <p className="text-sm text-[#A0A0A8]">Procesando imagen...</p>
+                  <ImageIcon className="w-8 h-8 text-[#2E6BFF] animate-pulse" />
+                  <p className="text-sm text-[#8A90A0]">Procesando imagen...</p>
                 </>
               ) : (
                 <>
-                  <Upload className="w-8 h-8 text-[#C9A961]" />
-                  <p className="text-sm font-medium text-[#F5F5F0]">
+                  <Upload className="w-8 h-8 text-[#2E6BFF]" />
+                  <p className="text-sm font-medium text-[#EDEFF4]">
                     Adjunta la captura de tu pago
                   </p>
-                  <p className="text-xs text-[#A0A0A8]/60">PNG, JPG hasta 6 MB · arrastra o selecciona</p>
+                  <p className="text-xs text-[#8A90A0]/60">PNG, JPG hasta 6 MB · arrastra o selecciona</p>
                 </>
               )}
             </div>
@@ -119,7 +119,7 @@ export function ReceiptUploader({ onFile, onClear }: ReceiptUploaderProps) {
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="flex items-center gap-2 bg-[#C9A961] text-[#0B0B0D] font-semibold text-sm rounded-md px-4 py-2 transition-all hover:bg-[#E8D08B] active:scale-[0.98]"
+              className="flex items-center gap-2 bg-[#2E6BFF] text-[#08090C] font-semibold text-sm rounded-md px-4 py-2 transition-all hover:bg-[#4F7FFF] active:scale-[0.98]"
             >
               <Upload className="w-3.5 h-3.5" />
               Seleccionar imagen

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { Loader2, RefreshCcw, Ticket, CreditCard, Trophy, Clock } from "lucide-react";
@@ -15,18 +15,18 @@ interface MetricCardProps {
 
 function MetricCard({ label, value, icon, sub }: MetricCardProps) {
   return (
-    <div className="rounded-md border border-[#2A2A33] bg-[#1C1C22] p-4 flex flex-col gap-2">
+    <div className="rounded-md border border-[#1C1F27] bg-[#0F1116] p-4 flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs text-[#A0A0A8] uppercase tracking-wider">{label}</span>
-        <span className="text-[#C9A961]/60">{icon}</span>
+        <span className="text-xs text-[#8A90A0] uppercase tracking-wider">{label}</span>
+        <span className="text-[#2E6BFF]/60">{icon}</span>
       </div>
       <span
-        className="text-2xl font-bold text-[#F5F5F0]"
-        style={{ fontFamily: "var(--font-playfair)" }}
+        className="text-2xl font-bold text-[#EDEFF4]"
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </span>
-      {sub && <span className="text-xs text-[#A0A0A8]/60">{sub}</span>}
+      {sub && <span className="text-xs text-[#8A90A0]/60">{sub}</span>}
     </div>
   );
 }
@@ -71,27 +71,27 @@ export default function AdminDashboardPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1
-            className="font-bold text-xl text-[#F5F5F0]"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            className="font-bold text-xl text-[#EDEFF4]"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Dashboard
           </h1>
-          <p className="text-xs text-[#A0A0A8] mt-0.5">Resumen general</p>
+          <p className="text-xs text-[#8A90A0] mt-0.5">Resumen general</p>
         </div>
         <button
           onClick={fetchData}
-          className="p-2 rounded-md border border-[#2A2A33] text-[#A0A0A8] hover:text-[#C9A961] hover:border-[#C9A961]/40 transition-all"
+          className="p-2 rounded-md border border-[#1C1F27] text-[#8A90A0] hover:text-[#2E6BFF] hover:border-[#2E6BFF]/40 transition-all"
         >
           <RefreshCcw className="w-4 h-4" />
         </button>
       </div>
 
       {/* Ornamental divider */}
-      <div className="h-px bg-gradient-to-r from-transparent via-[#3D3D48] to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-[#1C1F27] to-transparent" />
 
       {loading ? (
         <div className="flex items-center justify-center py-16">
-          <Loader2 className="w-6 h-6 text-[#C9A961] animate-spin" />
+          <Loader2 className="w-6 h-6 text-[#2E6BFF] animate-spin" />
         </div>
       ) : (
         <>
@@ -123,19 +123,19 @@ export default function AdminDashboardPage() {
           {/* Active raffles summary */}
           {raffles.length > 0 && (
             <div className="flex flex-col gap-3">
-              <h2 className="text-sm font-medium text-[#A0A0A8] uppercase tracking-wider">
+              <h2 className="text-sm font-medium text-[#8A90A0] uppercase tracking-wider">
                 Sorteos
               </h2>
               <div className="flex flex-col gap-2">
                 {raffles.map((r) => (
                   <div
                     key={r.id}
-                    className="rounded-md border border-[#2A2A33] bg-[#1C1C22] p-3 flex items-center justify-between"
+                    className="rounded-md border border-[#1C1F27] bg-[#0F1116] p-3 flex items-center justify-between"
                   >
                     <div>
-                      <p className="text-sm font-medium text-[#F5F5F0]">{r.title}</p>
+                      <p className="text-sm font-medium text-[#EDEFF4]">{r.title}</p>
                       <p
-                        className="text-xs text-[#C9A961]"
+                        className="text-xs text-[#2E6BFF]"
                         style={{ fontFamily: "var(--font-mono-code)" }}
                       >
                         {r.code_prefix}-XXXX · {formatCurrency(r.ticket_price)}/ticket
@@ -145,7 +145,7 @@ export default function AdminDashboardPage() {
                       className={`text-xs px-2 py-0.5 rounded border ${
                         r.status === "active"
                           ? "text-[#0F7B5C] border-[#0F7B5C]/30 bg-[#0F7B5C]/10"
-                          : "text-[#A0A0A8] border-[#2A2A33]"
+                          : "text-[#8A90A0] border-[#1C1F27]"
                       }`}
                     >
                       {r.status}

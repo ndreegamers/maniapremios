@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -48,8 +48,8 @@ export function PaymentQueue({ purchases, receiptUrls, onRefresh }: PaymentQueue
   if (purchases.length === 0) {
     return (
       <div className="flex flex-col items-center gap-4 py-16 text-center">
-        <Clock className="w-10 h-10 text-[#3D3D48]" />
-        <p className="text-[#A0A0A8] text-sm">No hay pagos pendientes</p>
+        <Clock className="w-10 h-10 text-[#262A34]" />
+        <p className="text-[#8A90A0] text-sm">No hay pagos pendientes</p>
       </div>
     );
   }
@@ -69,36 +69,36 @@ export function PaymentQueue({ purchases, receiptUrls, onRefresh }: PaymentQueue
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="rounded-md border border-[#2A2A33] bg-[#1C1C22] overflow-hidden"
+              className="rounded-md border border-[#1C1F27] bg-[#0F1116] overflow-hidden"
             >
               <div className="p-4 flex flex-col gap-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex flex-col gap-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <User className="w-3.5 h-3.5 text-[#A0A0A8] shrink-0" />
-                      <span className="font-medium text-[#F5F5F0] text-sm truncate">
+                      <User className="w-3.5 h-3.5 text-[#8A90A0] shrink-0" />
+                      <span className="font-medium text-[#EDEFF4] text-sm truncate">
                         {purchase.participant?.first_name} {purchase.participant?.last_name}
                       </span>
                     </div>
                     <span
-                      className="text-[#C9A961] text-xs tracking-wider"
+                      className="text-[#2E6BFF] text-xs tracking-wider"
                       style={{ fontFamily: "var(--font-mono-code)" }}
                     >
                       DNI {purchase.participant?.dni}
                     </span>
                   </div>
 
-                  <span className="text-xs text-[#A0A0A8] border border-[#2A2A33] rounded px-2 py-0.5 shrink-0 capitalize">
+                  <span className="text-xs text-[#8A90A0] border border-[#1C1F27] rounded px-2 py-0.5 shrink-0 capitalize">
                     {purchase.payment_method}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-[#A0A0A8]">
+                <div className="flex items-center justify-between text-xs text-[#8A90A0]">
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-1">
                       <Ticket className="w-3 h-3" />
                       <span
-                        className="font-medium text-[#F5F5F0]"
+                        className="font-medium text-[#EDEFF4]"
                         style={{ fontFamily: "var(--font-mono-code)" }}
                       >
                         {purchase.total_tickets}
@@ -108,7 +108,7 @@ export function PaymentQueue({ purchases, receiptUrls, onRefresh }: PaymentQueue
                     <div className="flex items-center gap-1">
                       <CreditCard className="w-3 h-3" />
                       <span
-                        className="font-medium text-[#C9A961]"
+                        className="font-medium text-[#2E6BFF]"
                         style={{ fontFamily: "var(--font-mono-code)" }}
                       >
                         {formatCurrency(purchase.total_amount)}
@@ -124,7 +124,7 @@ export function PaymentQueue({ purchases, receiptUrls, onRefresh }: PaymentQueue
                 {receiptUrl && (
                   <button
                     onClick={() => setExpanded(isExpanded ? null : purchase.id)}
-                    className="flex items-center gap-2 text-xs text-[#C9A961] hover:underline w-fit"
+                    className="flex items-center gap-2 text-xs text-[#2E6BFF] hover:underline w-fit"
                   >
                     <ExternalLink className="w-3 h-3" />
                     {isExpanded ? "Ocultar" : "Ver"} comprobante
@@ -142,7 +142,7 @@ export function PaymentQueue({ purchases, receiptUrls, onRefresh }: PaymentQueue
                       <img
                         src={receiptUrl}
                         alt="Comprobante"
-                        className="w-full max-h-72 object-contain rounded-md border border-[#2A2A33] bg-[#15151A]"
+                        className="w-full max-h-72 object-contain rounded-md border border-[#1C1F27] bg-[#14161C]"
                       />
                     </motion.div>
                   )}

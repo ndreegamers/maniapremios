@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Loader2, Send, ArrowUp, Ticket } from "lucide-react";
+import { Loader2, Send, Ticket, CheckCircle2, QrCode, Upload } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -27,27 +27,45 @@ interface PaymentModalProps {
   totalAmount: number;
 }
 
-function StepDot({ number, active }: { number: number; active?: boolean }) {
+interface StepRowProps {
+  index: string;
+  title: string;
+  description?: string;
+  icon: React.ReactNode;
+  state: "done" | "active" | "idle";
+}
+
+function StepRow({ index, title, description, icon, state }: StepRowProps) {
   return (
-    <div className="flex items-center gap-2 mb-2">
-      <span
-        className={cn(
-          "w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0",
-          active
-            ? "bg-[#C9A961] text-[#0B0B0D]"
-            : "bg-[#2A2A33] text-[#A0A0A8]"
+    <div className={cn(
+      "flex items-start gap-4 py-3 border-b border-[#1C1F27] last:border-0",
+      state === "idle" && "opacity-40"
+    )}>
+      <span className="index-number pt-0.5 w-6 text-right shrink-0">{index}</span>
+      <div className={cn(
+        "p-1.5 rounded-md shrink-0 mt-0.5",
+        state === "done" ? "text-[#22C55E] bg-[#22C55E]/10" :
+        state === "active" ? "text-[#2E6BFF] bg-[#2E6BFF]/10" :
+        "text-[#8A90A0] bg-[#1C1F27]"
+      )}>
+        {state === "done" ? <CheckCircle2 className="w-4 h-4" /> : icon}
+      </div>
+      <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+        <span
+          className={cn(
+            "text-sm font-semibold leading-tight",
+            state === "active" ? "text-[#EDEFF4]" :
+            state === "done" ? "text-[#22C55E]" :
+            "text-[#8A90A0]"
+          )}
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          {title}
+        </span>
+        {description && (
+          <span className="text-xs text-[#8A90A0] leading-relaxed">{description}</span>
         )}
-      >
-        {number}
-      </span>
-      <span
-        className={cn(
-          "text-xs font-medium uppercase tracking-wider",
-          active ? "text-[#C9A961]" : "text-[#A0A0A8]"
-        )}
-      >
-        {number === 1 ? "Escanea y paga" : number === 2 ? "Adjunta comprobante" : "Enviar"}
-      </span>
+      </div>
     </div>
   );
 }
@@ -109,51 +127,57 @@ export function PaymentModal({
     }
   }
 
+  // Step states
+  const step1State = "done"; // always: user confirmed order before opening modal
+  const step2State = receiptFile ? "done" : "active";
+  const step3State = receiptFile && !submitting ? "active" : "idle";
+
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!o && !submitting) onClose(); }}>
-      <DialogContent className="bg-[#1C1C22] border-[#3D3D48] max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-[#0F1116] border-[#1C1F27] max-w-md w-full max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle
-            className="text-[#F5F5F0] text-lg"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            className="text-[#EDEFF4] text-base font-bold tracking-tight"
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            Realizar pago
+            Completar pago
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4">
           {/* Order summary */}
-          <div className="bg-[#15151A] rounded-md p-4 flex flex-col gap-2 border border-[#2A2A33]">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-1.5 text-[#A0A0A8] text-sm">
+          <div className="bg-[#14161C] rounded-lg p-4 flex flex-col gap-2 border border-[#1C1F27]">
+            <span className="section-label">Tu pedido</span>
+            <div className="flex justify-between items-center mt-1">
+              <div className="flex items-center gap-1.5 text-[#8A90A0] text-sm">
                 <Ticket className="w-3.5 h-3.5" />
                 <span>Tickets</span>
               </div>
               <span
-                className="font-medium text-[#F5F5F0]"
+                className="font-medium text-[#EDEFF4]"
                 style={{ fontFamily: "var(--font-mono-code)" }}
               >
                 {ticketsPaid}
                 {ticketsBonus > 0 && (
-                  <span className="ml-1 text-[#C9A961]">+{ticketsBonus} gratis</span>
+                  <span className="ml-1 text-[#38BDF8]">+{ticketsBonus} gratis</span>
                 )}
               </span>
             </div>
             {ticketsBonus > 0 && (
               <div className="flex justify-between items-center">
-                <span className="text-[#A0A0A8] text-sm">Total tickets</span>
+                <span className="text-[#8A90A0] text-sm">Total tickets</span>
                 <span
-                  className="font-bold text-[#C9A961]"
+                  className="font-bold text-[#2E6BFF]"
                   style={{ fontFamily: "var(--font-mono-code)" }}
                 >
                   {totalTickets}
                 </span>
               </div>
             )}
-            <div className="border-t border-[#2A2A33] pt-2 flex justify-between items-center">
-              <span className="text-sm text-[#A0A0A8] uppercase tracking-wider">Monto a pagar</span>
+            <div className="border-t border-[#1C1F27] pt-2 flex justify-between items-center">
+              <span className="text-xs text-[#8A90A0] uppercase tracking-wider">Monto a pagar</span>
               <span
-                className="font-bold text-xl text-[#C9A961]"
+                className="font-bold text-xl text-[#EDEFF4]"
                 style={{ fontFamily: "var(--font-mono-code)" }}
               >
                 {formatCurrency(totalAmount)}
@@ -161,78 +185,108 @@ export function PaymentModal({
             </div>
           </div>
 
-          {/* Step 1 — QR */}
-          <div>
-            <StepDot number={1} />
-            <div className="flex flex-col items-center gap-3">
-              <p className="text-xs text-[#A0A0A8] uppercase tracking-wider text-center">
-                Escanea el QR y paga exactamente
-              </p>
-              <div className="bg-white rounded-md p-3 border border-[#3D3D48]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/qr-yape-placeholder.svg"
-                  alt="QR de pago ManiaPremios — reemplazar con QR real"
-                  width={180}
-                  height={180}
-                  className="rounded"
+          {/* Numbered steps */}
+          <div className="bg-[#14161C] rounded-lg border border-[#1C1F27] overflow-hidden">
+            {/* Step 01 — Confirm */}
+            <div className="px-4">
+              <StepRow
+                index="01"
+                title="Pedido confirmado"
+                description={`${ticketCount_display(ticketsPaid, ticketsBonus)} para el sorteo seleccionado`}
+                icon={<CheckCircle2 className="w-4 h-4" />}
+                state={step1State}
+              />
+            </div>
+
+            {/* Step 02 — Pay with QR */}
+            <div className="px-4">
+              <StepRow
+                index="02"
+                title="Paga con Yape o Plin"
+                description={`Escanea el QR y envía exactamente ${formatCurrency(totalAmount)}`}
+                icon={<QrCode className="w-4 h-4" />}
+                state={step2State}
+              />
+            </div>
+
+            {/* QR inline */}
+            <div className="px-4 pb-4">
+              <div className="ml-10 flex flex-col items-start gap-3">
+                <div className="bg-white rounded-md p-2.5 border border-[#1C1F27] inline-block">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/qr-yape-placeholder.svg"
+                    alt="QR de pago ManiaPremios"
+                    width={140}
+                    height={140}
+                    className="rounded"
+                  />
+                </div>
+                <span
+                  className="font-bold text-2xl text-[#2E6BFF]"
+                  style={{ fontFamily: "var(--font-mono-code)" }}
+                >
+                  {formatCurrency(totalAmount)}
+                </span>
+              </div>
+            </div>
+
+            {/* Step 03 — Upload & send */}
+            <div className="px-4">
+              <StepRow
+                index="03"
+                title="Sube tu comprobante y envía"
+                description="Adjunta una captura del pago realizado"
+                icon={<Upload className="w-4 h-4" />}
+                state={step3State}
+              />
+            </div>
+
+            {/* Receipt uploader */}
+            <div className="px-4 pb-4">
+              <div className="ml-10">
+                <ReceiptUploader
+                  onFile={setReceiptFile}
+                  onClear={() => setReceiptFile(null)}
                 />
               </div>
-              <div
-                className="font-bold text-2xl text-[#C9A961]"
-                style={{ fontFamily: "var(--font-mono-code)" }}
-              >
-                {formatCurrency(totalAmount)}
-              </div>
-              <p className="text-xs text-[#A0A0A8] text-center">
-                Envía exactamente este monto por Yape
-              </p>
             </div>
           </div>
 
-          {/* Step 2 — Receipt */}
-          <div>
-            <StepDot number={2} active={!receiptFile} />
-            <ReceiptUploader
-              onFile={setReceiptFile}
-              onClear={() => setReceiptFile(null)}
-            />
-          </div>
-
-          {/* Step 3 — Submit */}
-          <div>
-            <StepDot number={3} active={!!receiptFile && !submitting} />
-            <motion.button
-              onClick={handleSubmit}
-              disabled={submitting || !receiptFile}
-              whileTap={{ scale: 0.97 }}
-              className={cn(
-                "w-full flex items-center justify-center gap-2 rounded-md py-3 font-semibold text-sm transition-all duration-200",
-                receiptFile && !submitting
-                  ? "bg-[#C9A961] text-[#0B0B0D] hover:bg-[#E8D08B]"
-                  : "bg-[#2A2A33] text-[#A0A0A8] cursor-not-allowed"
-              )}
-            >
-              {submitting ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Enviando...
-                </>
-              ) : receiptFile ? (
-                <>
-                  <Send className="w-4 h-4" />
-                  Enviar comprobante
-                </>
-              ) : (
-                <>
-                  <ArrowUp className="w-4 h-4" />
-                  Adjunta tu comprobante primero
-                </>
-              )}
-            </motion.button>
-          </div>
+          {/* Submit */}
+          <motion.button
+            onClick={handleSubmit}
+            disabled={submitting || !receiptFile}
+            whileTap={{ scale: 0.97 }}
+            className={cn(
+              "w-full flex items-center justify-center gap-2 rounded-md py-3 font-semibold text-sm transition-all duration-200 tracking-wide",
+              receiptFile && !submitting
+                ? "bg-[#2E6BFF] text-[#EDEFF4] hover:bg-[#4F7FFF]"
+                : "bg-[#1C1F27] text-[#8A90A0] cursor-not-allowed"
+            )}
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            {submitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Enviando comprobante...
+              </>
+            ) : receiptFile ? (
+              <>
+                <Send className="w-4 h-4" />
+                Enviar comprobante
+              </>
+            ) : (
+              "Adjunta tu comprobante primero"
+            )}
+          </motion.button>
         </div>
       </DialogContent>
     </Dialog>
   );
+}
+
+function ticketCount_display(paid: number, bonus: number): string {
+  if (bonus > 0) return `${paid} tickets + ${bonus} de regalo`;
+  return `${paid} ticket${paid > 1 ? "s" : ""}`;
 }

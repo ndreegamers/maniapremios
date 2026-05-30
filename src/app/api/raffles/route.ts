@@ -74,10 +74,17 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json();
-  const { title, description, image_url, ticket_price, total_tickets, draw_date, code_prefix } = body;
+  const { title, description, image_url, ticket_price, total_tickets, draw_date, code_prefix, is_free } = body;
 
-  if (!title || !image_url || !ticket_price || !total_tickets || !draw_date || !code_prefix) {
+  const isFree = is_free === true;
+
+  if (!title || !image_url || !total_tickets || !draw_date || !code_prefix) {
     return NextResponse.json({ error: "Faltan campos requeridos" }, { status: 400 });
+  }
+
+  // Free raffles have price 0; paid raffles require a price > 0
+  if (!isFree && (!ticket_price || parseFloat(ticket_price) <= 0)) {
+    return NextResponse.json({ error: "Los sorteos pagados requieren un precio mayor a 0" }, { status: 400 });
   }
 
   if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") {
@@ -90,9 +97,15 @@ export async function POST(request: NextRequest) {
     const { data, error } = await supabase
       .from("raffles")
       .insert({
-        title, description, image_url, ticket_price, total_tickets, draw_date,
+        title,
+        description,
+        image_url,
+        ticket_price: isFree ? 0 : parseFloat(ticket_price),
+        total_tickets,
+        draw_date,
         code_prefix: code_prefix.toUpperCase().slice(0, 3),
         status: "active",
+        is_free: isFree,
       })
       .select()
       .single();

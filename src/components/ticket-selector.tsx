@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -47,19 +47,19 @@ export function TicketSelector({ ticketPrice, value, onChange }: TicketSelectorP
               className={cn(
                 "flex flex-col items-center justify-center gap-2 rounded-md p-4 min-h-[100px] border transition-all duration-200",
                 isActive
-                  ? "border-[#C9A961]/60 bg-[#C9A961]/10"
-                  : "border-[#2A2A33] bg-[#15151A] hover:border-[#C9A961]/30"
+                  ? "border-[#2E6BFF]/60 bg-[#2E6BFF]/10"
+                  : "border-[#1C1F27] bg-[#14161C] hover:border-[#2E6BFF]/30"
               )}
             >
               <Star
                 className="w-5 h-5 transition-colors duration-200"
-                style={{ color: isActive ? "#C9A961" : "#3D3D48" }}
-                fill={isActive ? "#C9A961" : "none"}
+                style={{ color: isActive ? "#2E6BFF" : "#262A34" }}
+                fill={isActive ? "#2E6BFF" : "none"}
               />
               <span
                 className={cn(
                   "text-xs text-center leading-snug",
-                  isActive ? "text-[#F5F5F0]" : "text-[#A0A0A8]"
+                  isActive ? "text-[#EDEFF4]" : "text-[#8A90A0]"
                 )}
               >
                 {tier.label}
@@ -68,8 +68,8 @@ export function TicketSelector({ ticketPrice, value, onChange }: TicketSelectorP
                 className={cn(
                   "text-[10px] font-medium px-2 py-0.5 rounded-sm",
                   isActive
-                    ? "bg-[#C9A961] text-[#0B0B0D]"
-                    : "bg-[#2A2A33] text-[#A0A0A8]"
+                    ? "bg-[#2E6BFF] text-[#08090C]"
+                    : "bg-[#1C1F27] text-[#8A90A0]"
                 )}
               >
                 {tier.badge}
@@ -81,7 +81,7 @@ export function TicketSelector({ ticketPrice, value, onChange }: TicketSelectorP
 
       {/* Quick picks */}
       <div>
-        <p className="text-xs font-medium text-[#A0A0A8] uppercase tracking-widest mb-3">
+        <p className="text-xs font-medium text-[#8A90A0] uppercase tracking-widest mb-3">
           Seleccionar cantidad
         </p>
         <div className="grid grid-cols-5 gap-2">
@@ -96,23 +96,23 @@ export function TicketSelector({ ticketPrice, value, onChange }: TicketSelectorP
                 className={cn(
                   "relative flex flex-col items-center justify-center rounded-md py-3 border transition-all duration-200",
                   isSelected
-                    ? "border-[#C9A961] bg-[#C9A961]/10"
-                    : "border-[#2A2A33] bg-[#15151A] hover:border-[#C9A961]/40"
+                    ? "border-[#2E6BFF] bg-[#2E6BFF]/10"
+                    : "border-[#1C1F27] bg-[#14161C] hover:border-[#2E6BFF]/40"
                 )}
               >
                 <span
                   className={cn(
                     "font-bold text-xl leading-none",
-                    isSelected ? "text-[#C9A961]" : "text-[#F5F5F0]"
+                    isSelected ? "text-[#2E6BFF]" : "text-[#EDEFF4]"
                   )}
                 >
                   {qty}
                 </span>
-                <span className="text-[10px] text-[#A0A0A8] mt-0.5">
+                <span className="text-[10px] text-[#8A90A0] mt-0.5">
                   {qty === 1 ? "ticket" : "tickets"}
                 </span>
                 {qBonus > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-[#C9A961] text-[#0B0B0D] text-[10px] font-bold rounded-full px-1.5 py-0.5 leading-tight">
+                  <span className="absolute -top-2 -right-2 bg-[#2E6BFF] text-[#08090C] text-[10px] font-bold rounded-full px-1.5 py-0.5 leading-tight">
                     +{qBonus}
                   </span>
                 )}
@@ -129,8 +129,8 @@ export function TicketSelector({ ticketPrice, value, onChange }: TicketSelectorP
           className={cn(
             "w-full flex items-center justify-center gap-2 rounded-md py-2.5 border text-sm font-medium transition-all duration-200",
             customMode
-              ? "border-[#C9A961]/60 bg-[#C9A961]/10 text-[#C9A961]"
-              : "border-[#2A2A33] text-[#A0A0A8] hover:border-[#C9A961]/40 hover:text-[#F5F5F0]"
+              ? "border-[#2E6BFF]/60 bg-[#2E6BFF]/10 text-[#2E6BFF]"
+              : "border-[#1C1F27] text-[#8A90A0] hover:border-[#2E6BFF]/40 hover:text-[#EDEFF4]"
           )}
         >
           <Pencil className="w-3.5 h-3.5" />
@@ -151,7 +151,7 @@ export function TicketSelector({ ticketPrice, value, onChange }: TicketSelectorP
                 onChange={(e) => handleCustomChange(e.target.value)}
                 placeholder="Ej: 15"
                 autoFocus
-                className="mt-2 w-full bg-[#15151A] border border-[#C9A961]/30 rounded-md px-4 py-3 text-[#F5F5F0] font-bold text-center text-2xl focus:outline-none focus:border-[#C9A961] transition-all"
+                className="mt-2 w-full bg-[#14161C] border border-[#2E6BFF]/30 rounded-md px-4 py-3 text-[#EDEFF4] font-bold text-center text-2xl focus:outline-none focus:border-[#2E6BFF] transition-all"
               />
             </motion.div>
           )}
@@ -165,20 +165,20 @@ export function TicketSelector({ ticketPrice, value, onChange }: TicketSelectorP
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="rounded-md border border-[#2A2A33] bg-[#15151A] p-4 flex flex-col gap-3"
+            className="rounded-md border border-[#1C1F27] bg-[#14161C] p-4 flex flex-col gap-3"
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-[#A0A0A8] text-sm">
+              <div className="flex items-center gap-2 text-[#8A90A0] text-sm">
                 <Ticket className="w-3.5 h-3.5" />
                 <span>
                   {value} ticket{value !== 1 ? "s" : ""} × {formatCurrency(ticketPrice)}
                 </span>
               </div>
-              <span className="font-medium text-[#F5F5F0]">{formatCurrency(totalAmount)}</span>
+              <span className="font-medium text-[#EDEFF4]">{formatCurrency(totalAmount)}</span>
             </div>
 
             {bonus > 0 && (
-              <div className="flex items-center justify-between text-[#C9A961]">
+              <div className="flex items-center justify-between text-[#2E6BFF]">
                 <div className="flex items-center gap-2 text-sm">
                   <Star className="w-3.5 h-3.5" />
                   <span>Bonus promo &quot;{activePromo?.badge}&quot;</span>
@@ -187,24 +187,24 @@ export function TicketSelector({ ticketPrice, value, onChange }: TicketSelectorP
               </div>
             )}
 
-            <div className="border-t border-[#2A2A33] pt-3 flex items-center justify-between">
-              <span className="text-xs font-medium text-[#A0A0A8] uppercase tracking-wide">
+            <div className="border-t border-[#1C1F27] pt-3 flex items-center justify-between">
+              <span className="text-xs font-medium text-[#8A90A0] uppercase tracking-wide">
                 Total tickets
               </span>
               <span
-                className="font-bold text-2xl text-[#C9A961]"
-                style={{ fontFamily: "var(--font-playfair)", fontStyle: "italic" }}
+                className="font-bold text-2xl text-[#2E6BFF]"
+                style={{ fontFamily: "var(--font-display)", fontStyle: "italic" }}
               >
                 {total}
               </span>
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-[#A0A0A8] uppercase tracking-wide">
+              <span className="text-xs font-medium text-[#8A90A0] uppercase tracking-wide">
                 A pagar
               </span>
               <span
-                className="font-bold text-2xl text-[#F5F5F0]"
+                className="font-bold text-2xl text-[#EDEFF4]"
                 style={{ fontFamily: "var(--font-mono-code)" }}
               >
                 {formatCurrency(totalAmount)}

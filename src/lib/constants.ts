@@ -13,14 +13,14 @@ export const PROMO_TIERS: PromoTier[] = [
     bonusTickets: 3,
     label: "Lleva 10, obtén 3 GRATIS",
     badge: "+3 GRATIS",
-    color: "#C9A961",
+    color: "#2E6BFF",
   },
   {
     minTickets: 5,
     bonusTickets: 1,
     label: "Lleva 5, obtén 1 GRATIS",
     badge: "+1 GRATIS",
-    color: "#C9A961",
+    color: "#2E6BFF",
   },
 ];
 

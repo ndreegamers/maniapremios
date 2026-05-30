@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useCallback } from "react";
 import { Loader2, CheckCircle2, XCircle, Search } from "lucide-react";
@@ -60,7 +60,7 @@ export function DniInput({ onSuccess, onClear }: DniInputProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <label className="text-xs font-medium text-[#A0A0A8] uppercase tracking-widest">
+      <label className="text-xs font-medium text-[#8A90A0] uppercase tracking-widest">
         Tu DNI
       </label>
 
@@ -73,20 +73,20 @@ export function DniInput({ onSuccess, onClear }: DniInputProps) {
           maxLength={8}
           placeholder="12345678"
           className={cn(
-            "w-full bg-[#15151A] border rounded-md px-4 py-3 text-[#F5F5F0] text-lg tracking-widest text-center focus:outline-none transition-all duration-200 pr-11",
-            "placeholder:text-[#3D3D48]",
+            "w-full bg-[#14161C] border rounded-md px-4 py-3 text-[#EDEFF4] text-lg tracking-widest text-center focus:outline-none transition-all duration-200 pr-11",
+            "placeholder:text-[#262A34]",
             isSuccess && "border-[#0F7B5C] focus:border-[#0F7B5C]",
             isError && "border-[#7C2D2D] focus:border-[#7C2D2D]",
-            !result && "border-[#2A2A33] focus:border-[#C9A961]"
+            !result && "border-[#1C1F27] focus:border-[#2E6BFF]"
           )}
           style={{ fontFamily: "var(--font-mono-code)" }}
         />
         <div className="absolute right-3 top-1/2 -translate-y-1/2">
-          {loading && <Loader2 className="w-4 h-4 text-[#C9A961] animate-spin" />}
+          {loading && <Loader2 className="w-4 h-4 text-[#2E6BFF] animate-spin" />}
           {isSuccess && <CheckCircle2 className="w-4 h-4 text-[#0F7B5C]" />}
           {isError && <XCircle className="w-4 h-4 text-[#7C2D2D]" />}
           {!loading && !result && dni.length < 8 && (
-            <Search className="w-4 h-4 text-[#3D3D48]" />
+            <Search className="w-4 h-4 text-[#262A34]" />
           )}
         </div>
       </div>
@@ -96,7 +96,7 @@ export function DniInput({ onSuccess, onClear }: DniInputProps) {
           <CheckCircle2 className="w-4 h-4 text-[#0F7B5C] shrink-0" />
           <div className="flex flex-col">
             <span className="text-[#0F7B5C] text-xs">Identidad verificada</span>
-            <span className="text-[#F5F5F0] font-medium text-sm">
+            <span className="text-[#EDEFF4] font-medium text-sm">
               {result.first_name} {result.last_name}
             </span>
           </div>
@@ -111,7 +111,7 @@ export function DniInput({ onSuccess, onClear }: DniInputProps) {
       )}
 
       {dni.length > 0 && dni.length < 8 && (
-        <p className="text-xs text-[#A0A0A8]/60 text-center">
+        <p className="text-xs text-[#8A90A0]/60 text-center">
           {8 - dni.length} dígito{8 - dni.length !== 1 ? "s" : ""} restante{8 - dni.length !== 1 ? "s" : ""}
         </p>
       )}

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
@@ -64,7 +64,7 @@ export function VerificarContent() {
         {/* Back */}
         <Link
           href="/"
-          className="flex items-center gap-2 text-[#A0A0A8] hover:text-[#F5F5F0] text-sm transition-colors w-fit"
+          className="flex items-center gap-2 text-[#8A90A0] hover:text-[#EDEFF4] text-sm transition-colors w-fit"
         >
           <ArrowLeft className="w-4 h-4" />
           Volver al inicio
@@ -76,16 +76,16 @@ export function VerificarContent() {
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col gap-1"
         >
-          <span className="text-xs font-medium text-[#C9A961] uppercase tracking-widest">
+          <span className="text-xs font-medium text-[#2E6BFF] uppercase tracking-widest">
             Verificación
           </span>
           <h1
-            className="font-bold text-2xl sm:text-3xl text-[#F5F5F0]"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            className="font-bold text-2xl sm:text-3xl text-[#EDEFF4]"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Mis Tickets
           </h1>
-          <p className="text-[#A0A0A8] text-sm">
+          <p className="text-[#8A90A0] text-sm">
             Ingresa tu DNI para consultar tus boletos
           </p>
         </motion.div>
@@ -95,10 +95,10 @@ export function VerificarContent() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="rounded-lg border border-[#2A2A33] bg-[#1C1C22] p-5 flex flex-col gap-4"
+          className="rounded-lg border border-[#1C1F27] bg-[#0F1116] p-5 flex flex-col gap-4"
         >
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-medium text-[#A0A0A8] uppercase tracking-widest">
+            <label className="text-xs font-medium text-[#8A90A0] uppercase tracking-widest">
               Número de DNI
             </label>
             <input
@@ -109,7 +109,7 @@ export function VerificarContent() {
               onKeyDown={handleKeyDown}
               maxLength={8}
               placeholder="12345678"
-              className="w-full bg-[#15151A] border border-[#2A2A33] rounded-md px-4 py-3 text-[#F5F5F0] font-bold text-2xl tracking-[0.3em] text-center focus:outline-none focus:border-[#C9A961] transition-all"
+              className="w-full bg-[#14161C] border border-[#1C1F27] rounded-md px-4 py-3 text-[#EDEFF4] font-bold text-2xl tracking-[0.3em] text-center focus:outline-none focus:border-[#2E6BFF] transition-all"
               style={{ fontFamily: "var(--font-mono-code)" }}
             />
           </div>
@@ -120,8 +120,8 @@ export function VerificarContent() {
             className={cn(
               "w-full flex items-center justify-center gap-2 font-semibold text-sm rounded-md py-3 transition-all duration-200",
               inputVal.length === 8 && !loading
-                ? "bg-[#C9A961] text-[#0B0B0D] hover:bg-[#E8D08B]"
-                : "bg-[#2A2A33] text-[#3D3D48] cursor-not-allowed"
+                ? "bg-[#2E6BFF] text-[#08090C] hover:bg-[#4F7FFF]"
+                : "bg-[#1C1F27] text-[#262A34] cursor-not-allowed"
             )}
           >
             {loading ? (
@@ -143,7 +143,7 @@ export function VerificarContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-lg border border-[#2A2A33] bg-[#1C1C22] p-5"
+            className="rounded-lg border border-[#1C1F27] bg-[#0F1116] p-5"
           >
             <TicketList result={result} />
           </motion.div>
@@ -157,11 +157,11 @@ export function VerificarContent() {
             transition={{ delay: 0.3 }}
             className="flex flex-col items-center gap-3 py-4"
           >
-            <Ticket className="w-8 h-8 text-[#3D3D48]" />
-            <p className="text-[#A0A0A8] text-sm text-center">¿Aún no tienes tickets?</p>
+            <Ticket className="w-8 h-8 text-[#262A34]" />
+            <p className="text-[#8A90A0] text-sm text-center">¿Aún no tienes tickets?</p>
             <Link
               href="/"
-              className="flex items-center gap-2 bg-[#C9A961] text-[#0B0B0D] font-semibold text-sm rounded-md px-5 py-2 transition-all hover:bg-[#E8D08B]"
+              className="flex items-center gap-2 bg-[#2E6BFF] text-[#08090C] font-semibold text-sm rounded-md px-5 py-2 transition-all hover:bg-[#4F7FFF]"
             >
               <Ticket className="w-3.5 h-3.5" />
               Participar ahora

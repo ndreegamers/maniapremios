@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { Loader2, RefreshCcw } from "lucide-react";
@@ -48,8 +48,8 @@ export default function AdminPagosPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1
-            className="font-bold text-xl text-[#F5F5F0]"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            className="font-bold text-xl text-[#EDEFF4]"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Pagos pendientes
           </h1>
@@ -61,17 +61,17 @@ export default function AdminPagosPage() {
         </div>
         <button
           onClick={fetchData}
-          className="p-2 rounded-md border border-[#2A2A33] text-[#A0A0A8] hover:text-[#C9A961] hover:border-[#C9A961]/40 transition-all"
+          className="p-2 rounded-md border border-[#1C1F27] text-[#8A90A0] hover:text-[#2E6BFF] hover:border-[#2E6BFF]/40 transition-all"
         >
           <RefreshCcw className="w-4 h-4" />
         </button>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-[#3D3D48] to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-[#1C1F27] to-transparent" />
 
       {loading ? (
         <div className="flex items-center justify-center py-16">
-          <Loader2 className="w-6 h-6 text-[#C9A961] animate-spin" />
+          <Loader2 className="w-6 h-6 text-[#2E6BFF] animate-spin" />
         </div>
       ) : (
         <PaymentQueue

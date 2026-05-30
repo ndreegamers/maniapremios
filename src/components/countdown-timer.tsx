@@ -12,14 +12,14 @@ function TimeUnit({ value, label }: TimeUnit) {
   const display = value.toString().padStart(2, "0");
 
   return (
-    <div className="flex flex-col items-center gap-1 flex-1">
+    <div className="flex flex-col items-center gap-0.5 flex-1">
       <span
-        className="text-2xl font-bold text-[#F5F5F0] tabular-nums leading-none"
-        style={{ fontFamily: "var(--font-playfair)", fontStyle: "italic" }}
+        className="text-xl font-bold text-[#EDEFF4] tabular-nums leading-none"
+        style={{ fontFamily: "var(--font-mono-code)" }}
       >
         {display}
       </span>
-      <span className="text-[9px] font-medium text-[#A0A0A8] uppercase tracking-widest">
+      <span className="text-[8px] font-medium text-[#8A90A0] uppercase tracking-widest">
         {label}
       </span>
     </div>
@@ -29,10 +29,10 @@ function TimeUnit({ value, label }: TimeUnit) {
 function Separator() {
   return (
     <span
-      className="text-[#C9A961]/50 text-lg font-light leading-none mt-0.5 select-none flex-shrink-0"
-      style={{ fontFamily: "var(--font-playfair)" }}
+      className="text-[#2E6BFF]/40 text-base font-light leading-none mt-0.5 select-none flex-shrink-0"
+      style={{ fontFamily: "var(--font-mono-code)" }}
     >
-      ·
+      :
     </span>
   );
 }
@@ -57,8 +57,8 @@ export function CountdownTimer({ targetDate, compact = false }: CountdownTimerPr
   if (time.total <= 0) {
     return (
       <p
-        className="text-[#C9A961] text-center text-sm font-medium"
-        style={{ fontFamily: "var(--font-playfair)", fontStyle: "italic" }}
+        className="text-[#2E6BFF] text-center text-xs font-medium uppercase tracking-wider"
+        style={{ fontFamily: "var(--font-mono-code)" }}
       >
         Sorteo finalizado
       </p>
@@ -73,9 +73,9 @@ export function CountdownTimer({ targetDate, compact = false }: CountdownTimerPr
   ];
 
   return (
-    <div className="flex items-start gap-1.5">
+    <div className={`flex items-start ${compact ? "gap-1" : "gap-2"}`}>
       {units.map((unit, i) => (
-        <div key={unit.label} className="flex items-start gap-1.5 flex-1">
+        <div key={unit.label} className="flex items-start gap-1 flex-1">
           <TimeUnit {...unit} />
           {i < units.length - 1 && <Separator />}
         </div>

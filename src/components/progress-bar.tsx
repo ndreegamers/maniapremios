@@ -26,29 +26,29 @@ export function ProgressBar({ soldPercentage, totalTickets, ticketsSold }: Progr
   }, [isInView, soldPercentage, motionValue]);
 
   return (
-    <div ref={ref} className="w-full flex flex-col gap-2">
+    <div ref={ref} className="w-full flex flex-col gap-1.5">
       <div className="flex items-center justify-between">
         <span
           className={cn(
-            "text-xs font-medium uppercase tracking-wider",
-            isHot ? "text-[#C9A961]" : "text-[#A0A0A8]"
+            "text-[10px] font-medium uppercase tracking-wider",
+            isHot ? "text-[#38BDF8]" : "text-[#8A90A0]"
           )}
         >
           {isHot ? "¡Casi agotado!" : "Disponibilidad"}
         </span>
-        <span className="text-xs text-[#A0A0A8]">
+        <span className="text-[10px] text-[#8A90A0]" style={{ fontFamily: "var(--font-mono-code)" }}>
           {remaining > 0 ? `${remaining} restantes` : "Agotado"}
         </span>
       </div>
 
       {/* Track */}
-      <div className="relative h-1 bg-[#2A2A33] rounded-full overflow-hidden">
+      <div className="relative h-1 bg-[#1C1F27] rounded-full overflow-hidden">
         <motion.div
           className="absolute inset-y-0 left-0 rounded-full"
           style={{
             background: isHot
-              ? "linear-gradient(90deg, #8B7440 0%, #C9A961 70%, #E8D08B 100%)"
-              : "linear-gradient(90deg, #3D3D48 0%, #C9A961 100%)",
+              ? "linear-gradient(90deg, #1D4ED8 0%, #2E6BFF 50%, #38BDF8 100%)"
+              : "linear-gradient(90deg, #1D4ED8 0%, #2E6BFF 100%)",
           }}
           initial={{ width: "0%" }}
           animate={{ width: isInView ? `${soldPercentage}%` : "0%" }}
@@ -57,10 +57,10 @@ export function ProgressBar({ soldPercentage, totalTickets, ticketsSold }: Progr
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="text-[10px] text-[#A0A0A8]/60 tabular-nums">
+        <span className="text-[9px] text-[#8A90A0]/60 tabular-nums" style={{ fontFamily: "var(--font-mono-code)" }}>
           {ticketsSold} vendidos
         </span>
-        <span className="text-[10px] text-[#A0A0A8]/60 tabular-nums">
+        <span className="text-[9px] text-[#8A90A0]/60 tabular-nums" style={{ fontFamily: "var(--font-mono-code)" }}>
           {totalTickets} total
         </span>
       </div>

@@ -8,6 +8,7 @@ import {
   Trophy,
   Tag,
   LogOut,
+  Share2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -18,6 +19,7 @@ const NAV_ITEMS = [
   { href: "/admin/pagos", label: "Pagos", icon: CreditCard },
   { href: "/admin/sorteos", label: "Sorteos", icon: Tag },
   { href: "/admin/ganadores", label: "Ganadores", icon: Trophy },
+  { href: "/admin/referidos", label: "Referidos", icon: Share2 },
 ];
 
 export function AdminSidebar() {
@@ -34,22 +36,20 @@ export function AdminSidebar() {
   }
 
   return (
-    <aside className="w-56 shrink-0 border-r border-[#2A2A33] bg-[#0B0B0D] flex flex-col min-h-screen">
+    <aside className="w-52 shrink-0 border-r border-[#1C1F27] bg-[#08090C] flex flex-col min-h-screen">
       {/* Brand */}
-      <div className="px-5 py-6 border-b border-[#2A2A33]">
+      <div className="px-5 py-5 border-b border-[#1C1F27]">
         <span
-          className="text-sm font-bold text-[#C9A961] block"
-          style={{ fontFamily: "var(--font-playfair)" }}
+          className="text-sm font-bold text-[#EDEFF4] tracking-widest block"
+          style={{ fontFamily: "var(--font-display)" }}
         >
           MANIAPREMIOS
         </span>
-        <span className="text-[10px] text-[#A0A0A8] uppercase tracking-widest">
-          Panel Admin
-        </span>
+        <span className="section-label mt-1">Panel Admin</span>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
+      <nav className="flex-1 px-3 py-4 flex flex-col gap-0.5">
         {NAV_ITEMS.map((item) => {
           const isActive = item.exact
             ? pathname === item.href
@@ -59,10 +59,10 @@ export function AdminSidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-all duration-150",
+                "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-all duration-150 font-medium",
                 isActive
-                  ? "bg-[#C9A961]/10 text-[#C9A961] border border-[#C9A961]/20"
-                  : "text-[#A0A0A8] hover:text-[#F5F5F0] hover:bg-[#1C1C22]"
+                  ? "bg-[#2E6BFF]/10 text-[#2E6BFF] border border-[#2E6BFF]/20"
+                  : "text-[#8A90A0] hover:text-[#EDEFF4] hover:bg-[#0F1116] border border-transparent"
               )}
             >
               <item.icon className="w-4 h-4 shrink-0" />
@@ -73,10 +73,10 @@ export function AdminSidebar() {
       </nav>
 
       {/* Logout */}
-      <div className="px-3 py-4 border-t border-[#2A2A33]">
+      <div className="px-3 py-4 border-t border-[#1C1F27]">
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-[#A0A0A8] hover:text-[#F5F5F0] hover:bg-[#1C1C22] transition-all duration-150"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-[#8A90A0] hover:text-[#EDEFF4] hover:bg-[#0F1116] transition-all duration-150 border border-transparent"
         >
           <LogOut className="w-4 h-4 shrink-0" />
           Cerrar sesión

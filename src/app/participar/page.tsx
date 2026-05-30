@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+﻿import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { Topbar } from "@/components/nav/topbar";
 import { Footer } from "@/components/nav/footer";
@@ -15,7 +15,7 @@ export default function ParticiparPage() {
       <Suspense
         fallback={
           <main className="flex-1 flex items-center justify-center">
-            <Loader2 className="w-6 h-6 text-[#C9A961] animate-spin" />
+            <Loader2 className="w-6 h-6 text-[#2E6BFF] animate-spin" />
           </main>
         }
       >

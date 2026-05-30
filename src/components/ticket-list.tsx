@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Ticket, Clock, XCircle } from "lucide-react";
@@ -21,15 +21,15 @@ function TicketRow({ ticket, isLast }: { ticket: TicketWithRaffle; isLast: boole
   const { prefix, number, hash } = parseTicketCode(ticket.ticket_code);
   return (
     <div
-      className={`flex items-center gap-3 py-2.5 px-4 ${!isLast ? "border-b border-[#2A2A33]/50" : ""}`}
+      className={`flex items-center gap-3 py-2.5 px-4 ${!isLast ? "border-b border-[#1C1F27]/50" : ""}`}
       style={{ fontFamily: "var(--font-mono-code)" }}
     >
-      <Ticket className="w-3.5 h-3.5 text-[#C9A961]/60 shrink-0" />
-      <span className="text-[11px] text-[#A0A0A8]/60 w-8 shrink-0">{prefix}</span>
-      <span className="font-medium text-sm text-[#C9A961] w-12 shrink-0 tabular-nums">
+      <Ticket className="w-3.5 h-3.5 text-[#2E6BFF]/60 shrink-0" />
+      <span className="text-[11px] text-[#8A90A0]/60 w-8 shrink-0">{prefix}</span>
+      <span className="font-medium text-sm text-[#2E6BFF] w-12 shrink-0 tabular-nums">
         {number}
       </span>
-      <span className="text-[11px] text-[#A0A0A8] tracking-widest flex-1 tabular-nums">
+      <span className="text-[11px] text-[#8A90A0] tracking-widest flex-1 tabular-nums">
         {hash}
       </span>
       <div className="flex items-center gap-1 shrink-0">
@@ -51,24 +51,24 @@ function TicketGroup({
 }) {
   return (
     <div className="flex flex-col">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#2A2A33]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[#1C1F27]">
         <div className="flex flex-col gap-0.5">
           <span
-            className="text-sm font-bold text-[#F5F5F0] leading-tight"
-            style={{ fontFamily: "var(--font-playfair)" }}
+            className="text-sm font-bold text-[#EDEFF4] leading-tight"
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {raffleTitle}
           </span>
           {drawDate && (
-            <span className="text-[10px] text-[#A0A0A8]">
+            <span className="text-[10px] text-[#8A90A0]">
               Sorteo: {formatDate(drawDate)}
             </span>
           )}
         </div>
-        <div className="flex items-center gap-1.5 bg-[#C9A961]/10 rounded px-2.5 py-1 border border-[#C9A961]/20">
-          <Ticket className="w-3 h-3 text-[#C9A961]" />
+        <div className="flex items-center gap-1.5 bg-[#2E6BFF]/10 rounded px-2.5 py-1 border border-[#2E6BFF]/20">
+          <Ticket className="w-3 h-3 text-[#2E6BFF]" />
           <span
-            className="font-medium text-sm text-[#C9A961]"
+            className="font-medium text-sm text-[#2E6BFF]"
             style={{ fontFamily: "var(--font-mono-code)" }}
           >
             {tickets.length}
@@ -76,12 +76,12 @@ function TicketGroup({
         </div>
       </div>
 
-      <div className="flex items-center gap-3 px-4 py-1.5 bg-[#0B0B0D]/30">
+      <div className="flex items-center gap-3 px-4 py-1.5 bg-[#08090C]/30">
         <span className="w-3.5 shrink-0" />
-        <span className="text-[9px] text-[#A0A0A8]/40 uppercase w-8 shrink-0">Serie</span>
-        <span className="text-[9px] text-[#A0A0A8]/40 uppercase w-12 shrink-0">Nro.</span>
-        <span className="text-[9px] text-[#A0A0A8]/40 uppercase flex-1">Hash</span>
-        <span className="text-[9px] text-[#A0A0A8]/40 uppercase shrink-0">Est.</span>
+        <span className="text-[9px] text-[#8A90A0]/40 uppercase w-8 shrink-0">Serie</span>
+        <span className="text-[9px] text-[#8A90A0]/40 uppercase w-12 shrink-0">Nro.</span>
+        <span className="text-[9px] text-[#8A90A0]/40 uppercase flex-1">Hash</span>
+        <span className="text-[9px] text-[#8A90A0]/40 uppercase shrink-0">Est.</span>
       </div>
 
       {tickets.map((ticket, idx) => (
@@ -97,9 +97,9 @@ export function TicketList({ result }: TicketListProps) {
   if (!participant) {
     return (
       <div className="flex flex-col items-center gap-4 py-12 text-center">
-        <Ticket className="w-10 h-10 text-[#3D3D48]" />
-        <p className="text-[#A0A0A8] text-sm">No encontramos registros con ese DNI.</p>
-        <p className="text-xs text-[#A0A0A8]/50">
+        <Ticket className="w-10 h-10 text-[#262A34]" />
+        <p className="text-[#8A90A0] text-sm">No encontramos registros con ese DNI.</p>
+        <p className="text-xs text-[#8A90A0]/50">
           Si realizaste una compra reciente, es posible que aún esté en proceso.
         </p>
       </div>
@@ -124,16 +124,16 @@ export function TicketList({ result }: TicketListProps) {
   return (
     <div className="flex flex-col gap-4">
       {/* Participant greeting */}
-      <div className="bg-[#1C1C22] rounded-md px-5 py-4 border border-[#2A2A33]">
-        <p className="text-xs text-[#A0A0A8] uppercase tracking-wider mb-1">Participante</p>
+      <div className="bg-[#0F1116] rounded-md px-5 py-4 border border-[#1C1F27]">
+        <p className="text-xs text-[#8A90A0] uppercase tracking-wider mb-1">Participante</p>
         <p
-          className="font-bold text-[#F5F5F0] text-lg"
-          style={{ fontFamily: "var(--font-playfair)" }}
+          className="font-bold text-[#EDEFF4] text-lg"
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {participant.first_name} {participant.last_name}
         </p>
         <p
-          className="text-[#C9A961] tracking-widest text-sm mt-0.5"
+          className="text-[#2E6BFF] tracking-widest text-sm mt-0.5"
           style={{ fontFamily: "var(--font-mono-code)" }}
         >
           DNI {participant.dni}
@@ -142,16 +142,16 @@ export function TicketList({ result }: TicketListProps) {
 
       {tickets.length > 0 ? (
         <div className="flex flex-col gap-1">
-          <p className="text-xs text-[#A0A0A8] uppercase tracking-widest px-1">
+          <p className="text-xs text-[#8A90A0] uppercase tracking-widest px-1">
             Tickets confirmados
           </p>
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-md border border-[#2A2A33] bg-[#15151A] overflow-hidden"
+            className="rounded-md border border-[#1C1F27] bg-[#14161C] overflow-hidden"
           >
             {Object.entries(groups).map(([key, group], groupIdx) => (
-              <div key={key} className={groupIdx > 0 ? "border-t border-[#2A2A33]/60" : ""}>
+              <div key={key} className={groupIdx > 0 ? "border-t border-[#1C1F27]/60" : ""}>
                 <TicketGroup
                   raffleTitle={group.title}
                   drawDate={group.drawDate}
@@ -162,7 +162,7 @@ export function TicketList({ result }: TicketListProps) {
           </motion.div>
         </div>
       ) : (
-        <p className="text-center py-4 text-[#A0A0A8] text-sm">
+        <p className="text-center py-4 text-[#8A90A0] text-sm">
           Aún no tienes tickets confirmados.
         </p>
       )}

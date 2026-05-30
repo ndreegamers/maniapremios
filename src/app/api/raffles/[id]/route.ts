@@ -22,7 +22,7 @@ export async function PATCH(
 
   const body = await request.json();
 
-  const allowed = ["title", "description", "image_url", "ticket_price", "total_tickets", "draw_date", "status"] as const;
+  const allowed = ["title", "description", "image_url", "ticket_price", "total_tickets", "draw_date", "status", "is_free"] as const;
   const updates: Record<string, unknown> = {};
   for (const field of allowed) {
     if (body[field] !== undefined) {
@@ -46,6 +46,49 @@ export async function PATCH(
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json({ raffle: data });
+  } catch {
+    return NextResponse.json({ error: "Error interno" }, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("admin_session");
+  if (!session?.value) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { id } = await params;
+
+  if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") {
+    return NextResponse.json(
+      { error: "Preview mode: conecta Supabase para eliminar sorteos reales" },
+      { status: 503 }
+    );
+  }
+
+  try {
+    const { createAdminClient } = await import("@/lib/supabase/admin");
+    const supabase = createAdminClient();
+
+    // Verify raffle exists
+    const { data: existing, error: fetchErr } = await supabase
+      .from("raffles")
+      .select("id, title")
+      .eq("id", id)
+      .single();
+
+    if (fetchErr || !existing) {
+      return NextResponse.json({ error: "Sorteo no encontrado" }, { status: 404 });
+    }
+
+    const { error } = await supabase.from("raffles").delete().eq("id", id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    return NextResponse.json({ success: true, deleted: existing.title });
   } catch {
     return NextResponse.json({ error: "Error interno" }, { status: 500 });
   }

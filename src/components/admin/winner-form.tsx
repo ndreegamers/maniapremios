@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { Loader2, Trophy, Check } from "lucide-react";
@@ -11,9 +11,9 @@ interface WinnerFormProps {
 }
 
 const inputClass =
-  "w-full bg-[#15151A] border border-[#2A2A33] rounded-md px-4 py-3 text-[#F5F5F0] focus:outline-none focus:border-[#C9A961] transition-all placeholder:text-[#3D3D48]";
+  "w-full bg-[#14161C] border border-[#1C1F27] rounded-md px-4 py-3 text-[#EDEFF4] focus:outline-none focus:border-[#2E6BFF] transition-all placeholder:text-[#262A34]";
 
-const labelClass = "text-xs font-medium text-[#A0A0A8] uppercase tracking-widest";
+const labelClass = "text-xs font-medium text-[#8A90A0] uppercase tracking-widest";
 
 export function WinnerForm({ raffles, onSuccess }: WinnerFormProps) {
   const [loading, setLoading] = useState(false);
@@ -101,7 +101,7 @@ export function WinnerForm({ raffles, onSuccess }: WinnerFormProps) {
             className={inputClass + " uppercase tracking-widest"}
             style={{ fontFamily: "var(--font-mono-code)" }}
           />
-          <p className="text-xs text-[#A0A0A8]/60">Formato: PREFIJO-NNNN-HHH (ej: DTM-0042-A3F)</p>
+          <p className="text-xs text-[#8A90A0]/60">Formato: PREFIJO-NNNN-HHH (ej: DTM-0042-A3F)</p>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -153,7 +153,7 @@ export function WinnerForm({ raffles, onSuccess }: WinnerFormProps) {
       <button
         type="submit"
         disabled={loading}
-        className="flex items-center justify-center gap-2 bg-[#C9A961] text-[#0B0B0D] font-semibold text-sm rounded-md py-3 transition-all hover:bg-[#E8D08B] disabled:opacity-50"
+        className="flex items-center justify-center gap-2 bg-[#2E6BFF] text-[#08090C] font-semibold text-sm rounded-md py-3 transition-all hover:bg-[#4F7FFF] disabled:opacity-50"
       >
         {loading ? (
           <Loader2 className="w-4 h-4 animate-spin" />

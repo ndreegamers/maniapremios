@@ -2,93 +2,63 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Ticket } from "lucide-react";
-import { FeaturedRaffle } from "@/components/home/featured-raffle";
-import { RaffleWithStats } from "@/lib/types";
+import { ArrowRight, Ticket, Trophy } from "lucide-react";
 
-interface EditorialHeroProps {
-  featuredRaffle: RaffleWithStats | null;
-}
-
-export function EditorialHero({ featuredRaffle }: EditorialHeroProps) {
+/**
+ * Hero de encabezado de la página principal.
+ * Rediseñado como header de sección estilo Forg1: fondo oscuro, acento azul neón,
+ * tipografía grotesk, sin sorteo destacado.
+ */
+export function EditorialHero() {
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-20">
-      <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
-        {/* Left — editorial headline */}
-        <div className="lg:w-[38%] flex flex-col gap-6 lg:sticky lg:top-24">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex flex-col gap-4"
+    <section className="w-full border-b border-[#1C1F27] bg-[#08090C]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col gap-6 max-w-2xl"
+        >
+          <span className="section-label">Sorteos exclusivos · Perú</span>
+
+          <h1
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#EDEFF4] leading-[1.05] tracking-tight"
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            <span className="text-xs font-medium text-[#C9A961] uppercase tracking-widest">
-              Sorteos exclusivos · Perú
-            </span>
+            Premios
+            <br />
+            <span className="text-[#2E6BFF]">extraordinarios.</span>
+          </h1>
 
-            <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#F5F5F0] leading-tight"
-              style={{ fontFamily: "var(--font-playfair)" }}
-            >
-              Premios
-              <br />
-              <span className="italic text-[#C9A961]">extraordinarios</span>
-            </h1>
-
-            <p className="text-base text-[#A0A0A8] leading-relaxed max-w-sm">
-              Mecánica totalmente transparente. Compra tus tickets, sube tu comprobante
-              y participa en nuestros sorteos con verificación manual.
-            </p>
-          </motion.div>
+          <p className="text-base text-[#8A90A0] leading-relaxed max-w-md">
+            Mecánica totalmente transparente. Compra tus tickets, sube tu comprobante
+            y participa en nuestros sorteos con verificación manual.
+          </p>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col gap-3"
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="flex flex-wrap items-center gap-4 pt-2"
           >
             <Link
               href="/verificar"
-              className="w-fit flex items-center gap-2 text-sm text-[#A0A0A8] hover:text-[#F5F5F0] transition-colors"
+              className="flex items-center gap-2 text-sm font-medium text-[#8A90A0] hover:text-[#EDEFF4] transition-colors group"
             >
-              <Ticket className="w-4 h-4 text-[#C9A961]" />
+              <Ticket className="w-4 h-4 text-[#2E6BFF]" />
               Verificar mis tickets
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
             <Link
               href="/ganadores"
-              className="w-fit flex items-center gap-2 text-sm text-[#A0A0A8] hover:text-[#F5F5F0] transition-colors"
+              className="flex items-center gap-2 text-sm font-medium text-[#8A90A0] hover:text-[#EDEFF4] transition-colors group"
             >
-              <span className="text-[#C9A961]">◆</span>
+              <Trophy className="w-4 h-4 text-[#2E6BFF]" />
               Ver ganadores anteriores
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </motion.div>
-
-          {/* Ornamental divider */}
-          <div className="flex items-center gap-3 mt-2">
-            <div className="flex-1 h-px bg-gradient-to-r from-[#3D3D48] to-transparent" />
-            <span className="text-[#3D3D48] text-xs">◆</span>
-          </div>
-
-          <p className="text-xs text-[#A0A0A8]/50">
-            Pago vía Yape · Solo Perú
-          </p>
-        </div>
-
-        {/* Right — featured raffle */}
-        <div className="flex-1 w-full">
-          {featuredRaffle ? (
-            <FeaturedRaffle raffle={featuredRaffle} />
-          ) : (
-            <div className="rounded-lg border border-[#2A2A33] bg-gradient-to-b from-[#1C1C22] to-[#15151A] p-12 flex flex-col items-center gap-4 text-center">
-              <span className="text-[#3D3D48] text-3xl">◆</span>
-              <p className="text-[#A0A0A8] text-sm">
-                Próximamente nuevos sorteos. ¡Vuelve pronto!
-              </p>
-            </div>
-          )}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
