@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { maskName } from "@/lib/utils";
 
 export async function GET(
@@ -57,5 +58,64 @@ export async function GET(
     return NextResponse.json({ winners });
   } catch {
     return NextResponse.json({ winners: [] });
+  }
+}
+
+// DELETE /api/winners/[winner_id] — admin only
+export async function DELETE(
+  _request: NextRequest,
+  { params }: { params: Promise<{ raffle_id: string }> }
+) {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("admin_session");
+  if (!session?.value) {
+    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  }
+
+  const { raffle_id: winner_id } = await params;
+
+  try {
+    const { createAdminClient } = await import("@/lib/supabase/admin");
+    const supabase = createAdminClient();
+
+    // Fetch winner to know position and raffle
+    const { data: winner, error: fetchErr } = await supabase
+      .from("winners")
+      .select("id, position, raffle_id")
+      .eq("id", winner_id)
+      .single();
+
+    if (fetchErr || !winner) {
+      return NextResponse.json({ error: "Ganador no encontrado" }, { status: 404 });
+    }
+
+    const { error: deleteErr } = await supabase
+      .from("winners")
+      .delete()
+      .eq("id", winner_id);
+
+    if (deleteErr) {
+      return NextResponse.json({ error: deleteErr.message }, { status: 500 });
+    }
+
+    // If position 1 was deleted and no other pos-1 winner remains, revert raffle to active
+    if (winner.position === 1) {
+      const { count } = await supabase
+        .from("winners")
+        .select("id", { count: "exact", head: true })
+        .eq("raffle_id", winner.raffle_id)
+        .eq("position", 1);
+
+      if ((count ?? 0) === 0) {
+        await supabase
+          .from("raffles")
+          .update({ status: "active" })
+          .eq("id", winner.raffle_id);
+      }
+    }
+
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json({ error: "Error interno" }, { status: 500 });
   }
 }
