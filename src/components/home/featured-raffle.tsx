@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, Ticket } from "lucide-react";
 import { RaffleWithStats } from "@/lib/types";
 import { CountdownTimer } from "@/components/countdown-timer";
-import { ProgressBar } from "@/components/progress-bar";
 import { formatCurrency } from "@/lib/utils";
 
 interface FeaturedRaffleProps {
@@ -68,13 +67,6 @@ export function FeaturedRaffle({ raffle }: FeaturedRaffleProps) {
             </p>
             <CountdownTimer targetDate={raffle.draw_date} compact />
           </div>
-
-          {/* Progress */}
-          <ProgressBar
-            soldPercentage={raffle.sold_percentage}
-            totalTickets={raffle.total_tickets}
-            ticketsSold={raffle.tickets_sold}
-          />
 
           {/* CTA */}
           <div className="flex gap-3">

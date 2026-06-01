@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, Ticket, Gift } from "lucide-react";
 import { RaffleWithStats } from "@/lib/types";
 import { CountdownTimer } from "@/components/countdown-timer";
-import { ProgressBar } from "@/components/progress-bar";
 import { formatCurrency } from "@/lib/utils";
 
 interface RaffleShowcaseProps {
@@ -64,15 +63,6 @@ export function RaffleShowcase({ raffle, index = 0 }: RaffleShowcaseProps) {
         <div className="bg-[#14161C] border border-[#1C1F27] rounded-md p-2.5">
           <CountdownTimer targetDate={raffle.draw_date} compact />
         </div>
-
-        {/* Progress — only for paid raffles */}
-        {!raffle.is_free && (
-          <ProgressBar
-            soldPercentage={raffle.sold_percentage}
-            totalTickets={raffle.total_tickets}
-            ticketsSold={raffle.tickets_sold}
-          />
-        )}
 
         {/* CTA */}
         <Link
