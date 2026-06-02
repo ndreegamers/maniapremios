@@ -215,7 +215,7 @@ export function PaymentModal({
                 <div className="bg-white rounded-md p-2.5 border border-[#1C1F27] inline-block">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/qr-yape-placeholder.svg"
+                    src="/qr-pago.jpeg"
                     alt="QR de pago ManiaPremios"
                     width={140}
                     height={140}
