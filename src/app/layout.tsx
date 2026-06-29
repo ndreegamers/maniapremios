@@ -26,6 +26,10 @@ export const metadata: Metadata = {
   title: "ManiaPremios | Premios Extraordinarios",
   description:
     "Participa en los sorteos exclusivos de ManiaPremios. Compra tus tickets y gana premios extraordinarios con mecánica totalmente transparente.",
+  icons: {
+    icon: "/logomaniapremios.png",
+    apple: "/logomaniapremios.png",
+  },
   openGraph: {
     title: "ManiaPremios",
     description: "Premios extraordinarios. Mecánica transparente.",
