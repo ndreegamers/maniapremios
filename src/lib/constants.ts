@@ -60,3 +60,11 @@ export const FOMO_HOT_THRESHOLD = 80;
 export const MAX_RECEIPT_SIZE = 2 * 1024 * 1024; // 2 MB
 export const TARGET_RECEIPT_WIDTH = 1200;
 export const TARGET_RECEIPT_QUALITY = 0.75;
+
+/* ── Contact / payment info ── */
+export const WHATSAPP_NUMBER = "51966335409"; // formato internacional, sin +
+export const WHATSAPP_DISPLAY = "966 335 409";
+export const WHATSAPP_DEFAULT_MSG =
+  "Hola, tengo una consulta sobre los sorteos de ManiaPremios";
+export const YAPE_NAME = "CARLA CARBAJAL";
+export const YAPE_NUMBER = "944580823";

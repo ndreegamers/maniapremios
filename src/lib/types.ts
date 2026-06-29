@@ -115,6 +115,35 @@ export interface ReferralUse {
   created_at: string;
 }
 
+export interface Coupon {
+  id: string;
+  code: string;
+  redeemed_at: string | null;
+  redeemed_by: string | null;
+  raffle_id: string | null;
+  created_at: string;
+  redeemer?: Pick<Participant, "id" | "dni" | "first_name" | "last_name"> | null;
+}
+
+export interface RaffleStats {
+  pendingCount: number;
+  approvedCount: number;
+  totalRevenue: number;
+  perRaffle: RaffleStatRow[];
+}
+
+export interface RaffleStatRow {
+  raffle_id: string;
+  title: string;
+  draw_date: string;
+  status: RaffleStatus;
+  is_free: boolean;
+  total_tickets: number;
+  tickets_sold: number;
+  participants: number;
+  revenue: number;
+}
+
 /* ── DTOs ── */
 
 export interface CreatePurchaseDTO {

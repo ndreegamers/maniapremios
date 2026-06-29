@@ -1,9 +1,10 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Loader2, RefreshCcw, Ticket, CreditCard, Trophy, Clock } from "lucide-react";
-import { Raffle, PurchaseWithDetails } from "@/lib/types";
-import { formatCurrency } from "@/lib/utils";
+import Link from "next/link";
+import { Loader2, RefreshCcw, Ticket, CreditCard, Trophy, Clock, ChevronRight } from "lucide-react";
+import { RaffleStats } from "@/lib/types";
+import { formatCurrency, formatDateShort } from "@/lib/utils";
 import { toast } from "sonner";
 
 interface MetricCardProps {
@@ -32,23 +33,16 @@ function MetricCard({ label, value, icon, sub }: MetricCardProps) {
 }
 
 export default function AdminDashboardPage() {
-  const [purchases, setPurchases] = useState<PurchaseWithDetails[]>([]);
-  const [raffles, setRaffles] = useState<Raffle[]>([]);
+  const [stats, setStats] = useState<RaffleStats | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [purchasesRes, rafflesRes] = await Promise.all([
-        fetch("/api/admin/purchases"),
-        fetch("/api/raffles"),
-      ]);
-
-      const purchasesData = await purchasesRes.json();
-      const rafflesData = await rafflesRes.json();
-
-      setPurchases(purchasesData.purchases ?? []);
-      setRaffles(rafflesData.raffles ?? []);
+      const res = await fetch("/api/admin/stats");
+      if (!res.ok) throw new Error("Error al cargar estadísticas");
+      const data: RaffleStats = await res.json();
+      setStats(data);
     } catch {
       toast.error("Error al cargar datos");
     } finally {
@@ -58,12 +52,7 @@ export default function AdminDashboardPage() {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  const pendingCount = purchases.filter((p) => p.payment_status === "pending").length;
-  const approvedCount = purchases.filter((p) => p.payment_status === "approved").length;
-  const totalRevenue = purchases
-    .filter((p) => p.payment_status === "approved")
-    .reduce((sum, p) => sum + p.total_amount, 0);
-  const activeRaffles = raffles.filter((r) => r.status === "active").length;
+  const activeRaffles = stats?.perRaffle.filter((r) => r.status === "active").length ?? 0;
 
   return (
     <div className="p-6 flex flex-col gap-6">
@@ -99,19 +88,20 @@ export default function AdminDashboardPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <MetricCard
               label="Pagos pendientes"
-              value={pendingCount}
+              value={stats?.pendingCount ?? 0}
               icon={<Clock className="w-4 h-4" />}
-              sub={pendingCount > 0 ? "Requieren revisión" : "Todo al día"}
+              sub={(stats?.pendingCount ?? 0) > 0 ? "Requieren revisión" : "Todo al día"}
             />
             <MetricCard
               label="Pagos aprobados"
-              value={approvedCount}
+              value={stats?.approvedCount ?? 0}
               icon={<CreditCard className="w-4 h-4" />}
             />
             <MetricCard
               label="Ingresos totales"
-              value={formatCurrency(totalRevenue)}
+              value={formatCurrency(stats?.totalRevenue ?? 0)}
               icon={<Ticket className="w-4 h-4" />}
+              sub="Solo pagos Yape aprobados"
             />
             <MetricCard
               label="Sorteos activos"
@@ -120,37 +110,46 @@ export default function AdminDashboardPage() {
             />
           </div>
 
-          {/* Active raffles summary */}
-          {raffles.length > 0 && (
+          {/* Raffles list — clickable */}
+          {(stats?.perRaffle.length ?? 0) > 0 && (
             <div className="flex flex-col gap-3">
               <h2 className="text-sm font-medium text-[#8A90A0] uppercase tracking-wider">
                 Sorteos
               </h2>
               <div className="flex flex-col gap-2">
-                {raffles.map((r) => (
-                  <div
-                    key={r.id}
-                    className="rounded-md border border-[#1C1F27] bg-[#0F1116] p-3 flex items-center justify-between"
+                {stats!.perRaffle.map((r) => (
+                  <Link
+                    key={r.raffle_id}
+                    href={`/admin/sorteos/${r.raffle_id}`}
+                    className="rounded-md border border-[#1C1F27] bg-[#0F1116] p-3 flex items-center justify-between hover:border-[#2E6BFF]/30 hover:bg-[#0F1116]/80 transition-all group"
                   >
-                    <div>
-                      <p className="text-sm font-medium text-[#EDEFF4]">{r.title}</p>
+                    <div className="flex flex-col gap-0.5">
+                      <p className="text-sm font-medium text-[#EDEFF4] group-hover:text-[#2E6BFF] transition-colors">
+                        {r.title}
+                      </p>
                       <p
                         className="text-xs text-[#2E6BFF]"
                         style={{ fontFamily: "var(--font-mono-code)" }}
                       >
-                        {r.code_prefix}-XXXX · {formatCurrency(r.ticket_price)}/ticket
+                        {r.participants} participantes · {formatCurrency(r.revenue)} recaudado
+                      </p>
+                      <p className="text-xs text-[#8A90A0]">
+                        Cierra: {formatDateShort(r.draw_date)}
                       </p>
                     </div>
-                    <span
-                      className={`text-xs px-2 py-0.5 rounded border ${
-                        r.status === "active"
-                          ? "text-[#0F7B5C] border-[#0F7B5C]/30 bg-[#0F7B5C]/10"
-                          : "text-[#8A90A0] border-[#1C1F27]"
-                      }`}
-                    >
-                      {r.status}
-                    </span>
-                  </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded border ${
+                          r.status === "active"
+                            ? "text-[#0F7B5C] border-[#0F7B5C]/30 bg-[#0F7B5C]/10"
+                            : "text-[#8A90A0] border-[#1C1F27]"
+                        }`}
+                      >
+                        {r.status}
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-[#8A90A0] group-hover:text-[#2E6BFF] transition-colors" />
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>

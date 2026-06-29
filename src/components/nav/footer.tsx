@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { YAPE_NAME, YAPE_NUMBER } from "@/lib/constants";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -37,7 +38,8 @@ export function Footer() {
           {/* Info */}
           <div className="flex flex-col gap-2">
             <span className="section-label mb-2">Info</span>
-            <span className="text-sm text-[#8A90A0]">Pago vía Yape</span>
+            <span className="text-sm text-[#8A90A0]">Yape: {YAPE_NAME}</span>
+            <span className="text-sm text-[#8A90A0]">{YAPE_NUMBER}</span>
             <span className="text-sm text-[#8A90A0]">Verificación manual</span>
             <span className="text-sm text-[#8A90A0]">Solo Perú</span>
           </div>

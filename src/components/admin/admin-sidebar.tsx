@@ -9,6 +9,7 @@ import {
   Tag,
   LogOut,
   Share2,
+  Ticket,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -20,6 +21,7 @@ const NAV_ITEMS = [
   { href: "/admin/sorteos", label: "Sorteos", icon: Tag },
   { href: "/admin/ganadores", label: "Ganadores", icon: Trophy },
   { href: "/admin/referidos", label: "Referidos", icon: Share2 },
+  { href: "/admin/cupones", label: "Cupones", icon: Ticket },
 ];
 
 export function AdminSidebar() {

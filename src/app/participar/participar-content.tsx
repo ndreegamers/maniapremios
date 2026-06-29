@@ -49,6 +49,11 @@ export function ParticiparContent() {
   const [freeTicketCode, setFreeTicketCode] = useState<string | null>(null);
   const [submittingFree, setSubmittingFree] = useState(false);
 
+  // Coupon redemption state
+  const [showCoupon, setShowCoupon] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [redeemingCoupon, setRedeemingCoupon] = useState(false);
+
   useEffect(() => {
     async function fetchRaffle() {
       try {
@@ -263,6 +268,37 @@ export function ParticiparContent() {
       toast.error("Error de conexión. Intenta nuevamente.");
     } finally {
       setSubmittingFree(false);
+    }
+  }
+
+  // ── Coupon redeem ─────────────────────────────────────────────────────────
+
+  async function handleCouponRedeem() {
+    if (!couponCode.trim() || !dniData?.success) return;
+    setRedeemingCoupon(true);
+    try {
+      const res = await fetch("/api/coupons/redeem", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code: couponCode.trim().toUpperCase(),
+          raffle_id: raffle!.id,
+          dni: dniData.dni,
+          first_name: dniData.first_name,
+          last_name: dniData.last_name,
+          phone,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.error ?? "Error al canjear el cupón");
+        return;
+      }
+      setFreeTicketCode(data.ticket_code);
+    } catch {
+      toast.error("Error de conexión. Intenta nuevamente.");
+    } finally {
+      setRedeemingCoupon(false);
     }
   }
 
@@ -703,6 +739,49 @@ export function ParticiparContent() {
                       Ver QR y pagar
                       <ChevronRight className="w-4 h-4" />
                     </button>
+
+                    {/* Coupon redemption */}
+                    <div className="border-t border-[#1C1F27] pt-4">
+                      {!showCoupon ? (
+                        <button
+                          onClick={() => setShowCoupon(true)}
+                          className="text-xs text-[#8A90A0] hover:text-[#2E6BFF] underline underline-offset-2 transition-colors"
+                        >
+                          ¿Tienes un cupón? Canjearlo aquí
+                        </button>
+                      ) : (
+                        <div className="flex flex-col gap-2">
+                          <label className="text-xs font-medium text-[#8A90A0] uppercase tracking-widest">
+                            Código de cupón
+                          </label>
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={couponCode}
+                              onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                              placeholder="CUP-XXXXXX"
+                              className="flex-1 bg-[#14161C] border border-[#1C1F27] rounded-md px-4 py-2.5 text-[#EDEFF4] focus:outline-none focus:border-[#2E6BFF] transition-all placeholder:text-[#262A34] uppercase text-sm"
+                              style={{ fontFamily: "var(--font-mono-code)" }}
+                            />
+                            <button
+                              onClick={handleCouponRedeem}
+                              disabled={redeemingCoupon || !couponCode.trim()}
+                              className="flex items-center gap-1.5 px-4 py-2.5 rounded-md bg-[#0F7B5C] text-white text-sm font-semibold hover:bg-[#0F7B5C]/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                              style={{ fontFamily: "var(--font-display)" }}
+                            >
+                              {redeemingCoupon ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                              ) : (
+                                "Canjear"
+                              )}
+                            </button>
+                          </div>
+                          <p className="text-[10px] text-[#8A90A0]/60">
+                            El cupón te da 1 ticket gratis sin necesidad de pagar.
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>

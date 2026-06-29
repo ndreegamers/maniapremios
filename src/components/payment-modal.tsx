@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Loader2, Send, Ticket, CheckCircle2, QrCode, Upload } from "lucide-react";
+import { Loader2, Send, Ticket, CheckCircle2, QrCode, Upload, Copy, Check } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { ReceiptUploader } from "@/components/receipt-uploader";
 import { formatCurrency, cn } from "@/lib/utils";
+import { YAPE_NAME, YAPE_NUMBER } from "@/lib/constants";
 import { toast } from "sonner";
 
 interface PaymentModalProps {
@@ -85,6 +86,13 @@ export function PaymentModal({
 }: PaymentModalProps) {
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [copiedNumber, setCopiedNumber] = useState(false);
+
+  async function copyNumber() {
+    await navigator.clipboard.writeText(YAPE_NUMBER);
+    setCopiedNumber(true);
+    setTimeout(() => setCopiedNumber(false), 2000);
+  }
 
   const totalTickets = ticketsPaid + ticketsBonus;
 
@@ -222,6 +230,37 @@ export function PaymentModal({
                     className="rounded"
                   />
                 </div>
+
+                {/* Yape account info */}
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-[#8A90A0] uppercase tracking-wider">Cuenta Yape</span>
+                  <span
+                    className="text-sm font-semibold text-[#EDEFF4]"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {YAPE_NAME}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="text-sm text-[#2E6BFF]"
+                      style={{ fontFamily: "var(--font-mono-code)" }}
+                    >
+                      {YAPE_NUMBER}
+                    </span>
+                    <button
+                      onClick={copyNumber}
+                      title="Copiar número"
+                      className="p-1 rounded border border-[#1C1F27] text-[#8A90A0] hover:text-[#EDEFF4] hover:border-[#262A34] transition-all"
+                    >
+                      {copiedNumber ? (
+                        <Check className="w-3 h-3 text-[#22C55E]" />
+                      ) : (
+                        <Copy className="w-3 h-3" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+
                 <span
                   className="font-bold text-2xl text-[#2E6BFF]"
                   style={{ fontFamily: "var(--font-mono-code)" }}
