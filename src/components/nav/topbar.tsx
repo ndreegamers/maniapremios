@@ -1,26 +1,14 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Ticket } from "lucide-react";
 
 export function Topbar() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[#1C1F27] bg-[#08090C]/90 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-        {/* Isotipo + Wordmark */}
-        <Link href="/" className="flex items-center gap-2.5 group transition-opacity hover:opacity-80">
-          <div className="relative h-8 w-8 shrink-0 overflow-hidden">
-            <Image
-              src="/logomaniapremios.png"
-              alt=""
-              fill
-              className="object-cover mix-blend-multiply"
-              style={{ objectPosition: "center center" }}
-              sizes="32px"
-              priority
-            />
-          </div>
+        {/* Wordmark */}
+        <Link href="/" className="flex items-center gap-2.5 group">
           <span
-            className="text-base font-bold tracking-widest text-[#EDEFF4]"
+            className="text-base font-bold tracking-widest text-[#EDEFF4] transition-opacity group-hover:opacity-80"
             style={{ fontFamily: "var(--font-display)" }}
           >
             MANIAPREMIOS
